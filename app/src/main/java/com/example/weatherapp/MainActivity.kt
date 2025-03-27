@@ -1,39 +1,48 @@
 package com.example.weatherapp
 
-import android.content.Context
-import android.content.pm.PackageManager
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.Button
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.core.app.ActivityCompat
 import com.example.weatherapp.ui.theme.WeatherAppTheme
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationServices
-import android.Manifest
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.ui.platform.LocalContext
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 class MainActivity : ComponentActivity() {
-    private lateinit var fusedLocationClient: FusedLocationProviderClient
+    //private lateinit var fusedLocationClient: FusedLocationProviderClient
+    private lateinit var weatherViewModel: WeatherViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+        //fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+
+        //fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+
+        val retrofit = Retrofit.Builder().baseUrl("https://api.openweathermap.org/data/3.0/")
+            .addConverterFactory(GsonConverterFactory.create()).build()
+
+        val weatherApiService = retrofit.create(WeatherApiService::class.java)
+
+        val locationRepository = LocationRepository(
+            //fusedLocationClient = fusedLocationClient,
+            context = this
+        )
+
+        val weatherRepository = WeatherRepository(
+            weatherApiService = weatherApiService,
+            locationRepository = locationRepository,
+            apiKey = "40f4e3432085baaf45c4c9611eedf995"
+        )
+
+        weatherViewModel = WeatherViewModel(weatherRepository)
+
         setContent {
             WeatherAppTheme {
                 Surface(modifier = Modifier.fillMaxSize()) {
-
+                    Navigation(activity = this, viewModel = weatherViewModel)
                 }
             }
         }
