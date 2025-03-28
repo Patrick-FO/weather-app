@@ -1,6 +1,5 @@
 package com.example.weatherapp
 
-import com.google.gson.annotations.SerializedName
 
 //@TODO Reformat data classes later to follow DRY code principal? (Refactor)
 

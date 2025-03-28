@@ -5,34 +5,19 @@ import android.app.Activity
 import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.pm.PackageManager
-import android.location.LocationManager
-import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.util.Log
 import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityCompat.requestPermissions
-import androidx.core.location.LocationManagerCompat.getCurrentLocation
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationCallback
-import com.google.android.gms.location.LocationRequest
-import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
-import com.google.android.gms.location.LocationSettingsRequest
-import com.google.android.gms.location.LocationSettingsResponse
 import com.google.android.gms.location.Priority
-import com.google.android.gms.location.SettingsClient
 import com.google.android.gms.tasks.CancellationTokenSource
-import com.google.android.gms.tasks.Task
 
 //@TODO Analyze this entire file later
 
 class LocationRepository(
-    //val fusedLocationClient: FusedLocationProviderClient,
-    val context: Context,
+    val context: Context
 ) {
     private val fusedLocationClient = LocationServices.getFusedLocationProviderClient(context)
-    private val settingsClient = SettingsClient(context)
 
     private val REQUEST_CHECK_SETTINGS = 1002
 

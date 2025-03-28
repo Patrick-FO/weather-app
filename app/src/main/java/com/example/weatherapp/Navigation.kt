@@ -4,11 +4,14 @@ import WeatherPager
 import android.app.Activity
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 
 //TODO Look into how this works in relation to the pager.
+//TODO Take a look at how the navigation for the daily details screen works
 @Composable
 fun Navigation(activity: Activity, viewModel: WeatherViewModel, navController: NavHostController = rememberNavController()) {
     NavHost(
@@ -29,7 +32,14 @@ fun Navigation(activity: Activity, viewModel: WeatherViewModel, navController: N
             HourlyWeatherView(activity, viewModel)
         }
         composable(Screen.DailyWeatherScreen.route) {
-            DailyWeatherView(activity, viewModel)
+            DailyWeatherView(activity, viewModel, navController)
+        }
+        composable(
+            route = "${Screen.DailyWeatherDetailsScreen.route}/{dayIndex}",
+            arguments = listOf(navArgument("dayIndex") { type = NavType.IntType })
+        ) { backStackEntry ->
+            val dayIndex = backStackEntry.arguments?.getInt("dayIndex") ?: 0
+            DailyWeatherDetailsView(viewModel, navController, dayIndex)
         }
     }
 }

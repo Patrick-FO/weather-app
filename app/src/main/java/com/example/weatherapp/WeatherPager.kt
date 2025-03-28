@@ -22,7 +22,6 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.HorizontalPagerIndicator
 import com.google.accompanist.pager.rememberPagerState
-import kotlinx.coroutines.launch
 
 //TODO Analyize this entire file to learn how pagers work, as I just vibe coded this without looking into it. Maybe check some documentation?
 @OptIn(ExperimentalPagerApi::class)
@@ -65,7 +64,7 @@ fun WeatherPager(
                 when (page) {
                     0 -> CurrentWeatherView(viewModel)
                     1 -> HourlyWeatherView(activity, viewModel)
-                    2 -> DailyWeatherView(activity, viewModel)
+                    2 -> DailyWeatherView(activity, viewModel, navController)
                 }
             }
         }
