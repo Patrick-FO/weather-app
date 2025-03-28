@@ -138,34 +138,7 @@ fun DailyWeatherCard(dailyWeatherObject: DailyWeather, onClick: () -> Unit, navC
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DailyWeatherDetailsView(viewModel: WeatherViewModel, navController: NavHostController, dayIndex: Int) {
-
     val weatherData by viewModel.weatherData.observeAsState()
-
-    fun isToday(date: Date): Boolean {
-        val today = Calendar.getInstance()
-        val calendar = Calendar.getInstance()
-        calendar.time = date
-
-        return (calendar.get(Calendar.YEAR) == today.get(Calendar.YEAR) &&
-                calendar.get(Calendar.DAY_OF_YEAR) == today.get(Calendar.DAY_OF_YEAR))
-    }
-
-    fun formatTimestampToWeekday(
-        timestamp: Long,
-        abbreviated: Boolean = false,
-        useToday: Boolean = true
-    ): String {
-        val date = Date(timestamp * 1000)
-
-        if(useToday && isToday(date)) {
-            return "Today"
-        }
-
-        val pattern = if (abbreviated) "EEE" else "EEEE"
-        val format = SimpleDateFormat(pattern, Locale.getDefault())
-
-        return format.format(date)
-    }
 
     Scaffold(
         topBar = {

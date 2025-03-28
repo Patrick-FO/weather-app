@@ -62,13 +62,6 @@ fun HourlyWeatherView(activity: Activity, viewModel: WeatherViewModel) {
 
 @Composable
 fun HourlyWeatherCard(hourlyWeatherObject: HourlyWeather) {
-    fun formatTimestamp(timestamp: Long): String {
-        val date = Date(timestamp * 1000)
-        val format = SimpleDateFormat("h a", Locale.getDefault())
-
-        return format.format(date)
-    }
-
     Row(modifier = Modifier.fillMaxWidth().padding(16.dp)) {
         AsyncImage(
             model = ImageRequest.Builder(LocalContext.current)
@@ -84,7 +77,7 @@ fun HourlyWeatherCard(hourlyWeatherObject: HourlyWeather) {
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(text = formatTimestamp(hourlyWeatherObject.dt))
+            Text(text = formatTimestampToHour(hourlyWeatherObject.dt))
             Text(text = "Weather: ${hourlyWeatherObject.weather[0].main}")
             Text(text = "Temperature: ${hourlyWeatherObject.temp.toInt()}°C")
         }
