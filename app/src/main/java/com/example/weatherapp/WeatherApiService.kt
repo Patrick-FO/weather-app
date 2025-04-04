@@ -9,7 +9,7 @@ interface WeatherApiService {
         @Query("lat") latitude: Double,
         @Query("lon") longitude: Double,
         @Query("units") units: String = "metric",
-        @Query("appid") apiKey: String,
+        @Query("appid") apiKey: String = BuildConfig.API_KEY,
         @Query("exclude") exclude: String = "minutely,alerts"
     ): WeatherResponse
 }

@@ -34,7 +34,6 @@ class MainActivity : ComponentActivity() {
         val weatherRepository = WeatherRepository(
             weatherApiService = weatherApiService,
             locationRepository = locationRepository,
-            apiKey = "40f4e3432085baaf45c4c9611eedf995"
         )
 
         weatherViewModel = WeatherViewModel(weatherRepository)

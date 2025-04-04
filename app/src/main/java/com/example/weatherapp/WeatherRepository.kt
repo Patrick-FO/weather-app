@@ -12,7 +12,6 @@ import kotlinx.coroutines.withContext
 class WeatherRepository(
     private val weatherApiService: WeatherApiService,
     private val locationRepository: LocationRepository,
-    private val apiKey: String
 ) {
     //wtf is onWeatherData
     suspend fun getWeatherForCurrentLocation(activity: Activity, onWeatherData: (WeatherResponse?) -> Unit, onError: (String) -> Unit) {
@@ -23,13 +22,12 @@ class WeatherRepository(
 
                 CoroutineScope(Dispatchers.IO).launch {
                     try {
-                        val requestUrl = "https://api.openweathermap.org/data/3.0/onecall?lat=${coordinates.latitude}&lon=${coordinates.longitude}&units=metric&exclude=hourly,daily&appid=${apiKey}"
+                        val requestUrl = "https://api.openweathermap.org/data/3.0/onecall?lat=${coordinates.latitude}&lon=${coordinates.longitude}&units=metric&exclude=hourly,daily&appid=${BuildConfig.API_KEY}"
                         Log.d("WeatherRepository", "Requestion weather from: $requestUrl")
 
                         val weather = weatherApiService.getWeatherData(
                             latitude = coordinates.latitude,
                             longitude = coordinates.longitude,
-                            apiKey = apiKey
                         )
 
                         Log.d("WeatherRepository", "Weather API response successful")
